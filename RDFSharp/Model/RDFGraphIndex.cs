@@ -1,0 +1,228 @@
+﻿/*
+   Copyright 2012-2022 Marco De Salvo
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+using System;
+using System.Collections.Generic;
+
+namespace RDFSharp.Model
+{
+    /// <summary>
+    /// RDFGraphIndex represents an automatically managed in-memory index structure for the triples of a graph.
+    /// </summary>
+    internal class RDFGraphIndex
+    {
+        #region Properties
+        /// <summary>
+        /// Index on the subjects of the graph's triples
+        /// </summary>
+        internal Dictionary<long, HashSet<long>> Subjects { get; set; }
+
+        /// <summary>
+        /// Index on the predicates of the graph's triples
+        /// </summary>
+        internal Dictionary<long, HashSet<long>> Predicates { get; set; }
+
+        /// <summary>
+        /// Index on the objects of the graph's triples
+        /// </summary>
+        internal Dictionary<long, HashSet<long>> Objects { get; set; }
+
+        /// <summary>
+        /// Index on the literals of the graph's triples
+        /// </summary>
+        internal Dictionary<long, HashSet<long>> Literals { get; set; }
+
+        /// <summary>
+        /// Empty hashset to be returned in case of index miss
+        /// </summary>
+        private static HashSet<long> EmptyHashSet = new HashSet<long>();
+        #endregion
+
+        #region Ctors
+        /// <summary>
+        /// Default-ctor for an empty graph index
+        /// </summary>
+        internal RDFGraphIndex()
+        {
+            this.Subjects = new Dictionary<long, HashSet<long>>();
+            this.Predicates = new Dictionary<long, HashSet<long>>();
+            this.Objects = new Dictionary<long, HashSet<long>>();
+            this.Literals = new Dictionary<long, HashSet<long>>();
+        }
+        #endregion
+
+        #region Methods
+
+        #region Add
+        /// <summary>
+        /// Adds the given triple to the SPOL index
+        /// </summary>
+        internal RDFGraphIndex AddIndex(RDFTriple triple)
+        {
+            if (triple != null)
+            {
+                //Subject
+                if (!this.Subjects.ContainsKey(triple.Subject.PatternMemberID))
+                    this.Subjects.Add(triple.Subject.PatternMemberID, new HashSet<long>() { triple.TripleID });
+                else
+                {
+                    if (!this.Subjects[triple.Subject.PatternMemberID].Contains(triple.TripleID))
+                        this.Subjects[triple.Subject.PatternMemberID].Add(triple.TripleID);
+                }
+
+                //Predicate
+                if (!this.Predicates.ContainsKey(triple.Predicate.PatternMemberID))
+                    this.Predicates.Add(triple.Predicate.PatternMemberID, new HashSet<long>() { triple.TripleID });
+                else
+                {
+                    if (!this.Predicates[triple.Predicate.PatternMemberID].Contains(triple.TripleID))
+                        this.Predicates[triple.Predicate.PatternMemberID].Add(triple.TripleID);
+                }
+
+                //Object
+                if (triple.TripleFlavor == RDFModelEnums.RDFTripleFlavors.SPO)
+                {
+                    if (!this.Objects.ContainsKey(triple.Object.PatternMemberID))
+                        this.Objects.Add(triple.Object.PatternMemberID, new HashSet<long>() { triple.TripleID });
+                    else
+                    {
+                        if (!this.Objects[triple.Object.PatternMemberID].Contains(triple.TripleID))
+                            this.Objects[triple.Object.PatternMemberID].Add(triple.TripleID);
+                    }
+                }
+
+                //Literal
+                else
+                {
+                    if (!this.Literals.ContainsKey(triple.Object.PatternMemberID))
+                        this.Literals.Add(triple.Object.PatternMemberID, new HashSet<long>() { triple.TripleID });
+                    else
+                    {
+                        if (!this.Literals[triple.Object.PatternMemberID].Contains(triple.TripleID))
+                            this.Literals[triple.Object.PatternMemberID].Add(triple.TripleID);
+                    }
+                }
+            }
+            return this;
+        }
+        #endregion
+
+        #region Remove
+        /// <summary>
+        /// Removes the given triple from the SPOL index
+        /// </summary>
+        internal RDFGraphIndex RemoveIndex(RDFTriple triple)
+        {
+            if (triple != null)
+            {
+                //Subject
+                if (this.Subjects.ContainsKey(triple.Subject.PatternMemberID))
+                {
+                    if (this.Subjects[triple.Subject.PatternMemberID].Contains(triple.TripleID))
+                    {
+                        this.Subjects[triple.Subject.PatternMemberID].Remove(triple.TripleID);
+                        if (this.Subjects[triple.Subject.PatternMemberID].Count == 0)
+                            this.Subjects.Remove(triple.Subject.PatternMemberID);
+                    }
+                }
+
+                //Predicate
+                if (this.Predicates.ContainsKey(triple.Predicate.PatternMemberID))
+                {
+                    if (this.Predicates[triple.Predicate.PatternMemberID].Contains(triple.TripleID))
+                    {
+                        this.Predicates[triple.Predicate.PatternMemberID].Remove(triple.TripleID);
+                        if (this.Predicates[triple.Predicate.PatternMemberID].Count == 0)
+                            this.Predicates.Remove(triple.Predicate.PatternMemberID);
+                    }
+                }
+
+                //Object
+                if (triple.TripleFlavor == RDFModelEnums.RDFTripleFlavors.SPO)
+                {
+                    if (this.Objects.ContainsKey(triple.Object.PatternMemberID))
+                    {
+                        if (this.Objects[triple.Object.PatternMemberID].Contains(triple.TripleID))
+                        {
+                            this.Objects[triple.Object.PatternMemberID].Remove(triple.TripleID);
+                            if (this.Objects[triple.Object.PatternMemberID].Count == 0)
+                                this.Objects.Remove(triple.Object.PatternMemberID);
+                        }
+                    }
+                }
+
+                //Literal
+                else
+                {
+                    if (this.Literals.ContainsKey(triple.Object.PatternMemberID))
+                    {
+                        if (this.Literals[triple.Object.PatternMemberID].Contains(triple.TripleID))
+                        {
+                            this.Literals[triple.Object.PatternMemberID].Remove(triple.TripleID);
+                            if (this.Literals[triple.Object.PatternMemberID].Count == 0)
+                                this.Literals.Remove(triple.Object.PatternMemberID);
+                        }
+                    }
+                }
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Clears the index
+        /// </summary>
+        internal void ClearIndex()
+        {
+            this.Subjects.Clear();
+            this.Predicates.Clear();
+            this.Objects.Clear();
+            this.Literals.Clear();
+        }
+        #endregion
+
+        #region Select
+        /// <summary>
+        /// Selects the triples indexed by the given subject
+        /// </summary>
+        internal HashSet<long> SelectIndexBySubject(RDFResource subjectResource)
+            => subjectResource != null && this.Subjects.ContainsKey(subjectResource.PatternMemberID)
+                ? this.Subjects[subjectResource.PatternMemberID] : EmptyHashSet;
+
+        /// <summary>
+        /// Selects the triples indexed by the given predicate
+        /// </summary>
+        internal HashSet<long> SelectIndexByPredicate(RDFResource predicateResource)
+            => predicateResource != null && this.Predicates.ContainsKey(predicateResource.PatternMemberID)
+                ? this.Predicates[predicateResource.PatternMemberID] : EmptyHashSet;
+
+        /// <summary>
+        /// Selects the triples indexed by the given object
+        /// </summary>
+        internal HashSet<long> SelectIndexByObject(RDFResource objectResource)
+            => objectResource != null && this.Objects.ContainsKey(objectResource.PatternMemberID)
+                ? this.Objects[objectResource.PatternMemberID] : EmptyHashSet;
+
+        /// <summary>
+        /// Selects the triples indexed by the given literal
+        /// </summary>
+        internal HashSet<long> SelectIndexByLiteral(RDFLiteral objectLiteral)
+            => objectLiteral != null && this.Literals.ContainsKey(objectLiteral.PatternMemberID)
+                ? this.Literals[objectLiteral.PatternMemberID] : EmptyHashSet;
+        #endregion
+
+        #endregion
+    }
+}
