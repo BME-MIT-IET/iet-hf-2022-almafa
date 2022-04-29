@@ -6,4 +6,4 @@ A megvalósítás során problémába ütköztem a projekt inicializálásakor, 
 
 - Teamsen kértem segítséget, és gyorsan kaptam is.
 
-Létrehoztam az összekötést a repo és a SonarCloud között (secret), majd elkészítettem a sonar.yml file-ban a leírót a github action-höz.
+Létrehoztam az összekötést a repo és a SonarCloud között (secret), majd elkészítettem a sonarcloud.yml file-ban a leírót a github action-höz.
