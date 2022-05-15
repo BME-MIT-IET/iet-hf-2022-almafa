@@ -1,4 +1,4 @@
-# RDFSharp [![NuGet Badge](https://buildstats.info/nuget/RDFSharp)](https://www.nuget.org/packages/RDFSharp) [![codecov](https://codecov.io/gh/mdesalvo/RDFSharp/branch/master/graph/badge.svg?token=wtP1B77d3e)](https://codecov.io/gh/mdesalvo/RDFSharp)
+# RDFSharp [![codecov](https://codecov.io/gh/BME-MIT-IET/iet-hf-2022-almafa/RDFSharp/branch/master/graph/badge.svg?token=wtP1B77d3e)](https://app.codecov.io/gh/BME-MIT-IET/iet-hf-2022-almafa)
 
 RDFSharp has a modular API made up of 4 layers: 
 
