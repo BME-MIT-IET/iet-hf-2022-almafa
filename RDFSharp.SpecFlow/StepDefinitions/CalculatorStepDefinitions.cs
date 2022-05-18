@@ -4,6 +4,10 @@ namespace RDFSharp.SpecFlow.StepDefinitions
     public sealed class CalculatorStepDefinitions
     {
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
+        private int firstNumber;
+        private int secondNumber;
+
+        private int result;
 
         [Given("the first number is (.*)")]
         public void GivenTheFirstNumberIs(int number)
@@ -14,7 +18,7 @@ namespace RDFSharp.SpecFlow.StepDefinitions
             // additional string/Table parameters can be defined on the step definition
             // method. 
 
-            throw new PendingStepException();
+            firstNumber = number;
         }
 
         [Given("the second number is (.*)")]
@@ -22,7 +26,7 @@ namespace RDFSharp.SpecFlow.StepDefinitions
         {
             //TODO: implement arrange (precondition) logic
 
-            throw new PendingStepException();
+            secondNumber = number;
         }
 
         [When("the two numbers are added")]
@@ -30,15 +34,15 @@ namespace RDFSharp.SpecFlow.StepDefinitions
         {
             //TODO: implement act (action) logic
 
-            throw new PendingStepException();
+            result = firstNumber + secondNumber;
         }
 
         [Then("the result should be (.*)")]
-        public void ThenTheResultShouldBe(int result)
+        public void ThenTheResultShouldBe(int expected)
         {
             //TODO: implement assert (verification) logic
 
-            throw new PendingStepException();
+            result.Should().Be(expected);
         }
     }
 }
