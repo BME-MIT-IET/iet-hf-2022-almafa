@@ -20,4 +20,8 @@
     <Folder Include="Support\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RDFSharp\RDFSharp.csproj" />
+  </ItemGroup>
+
 </Project>
