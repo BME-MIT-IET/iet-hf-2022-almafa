@@ -14,6 +14,7 @@ namespace RDFSharp.ManualTest
 
         static void Main(string[] args)
         {
+
             QueryTesting test  = new QueryTesting();
 
             test.Run();
