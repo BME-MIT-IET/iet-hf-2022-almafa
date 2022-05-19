@@ -76,9 +76,9 @@ namespace RDFSharp.SpecFlow.Features
         public virtual void FeatureBackground()
         {
 #line 3
- #line hidden
+#line hidden
 #line 4
- testRunner.Given("a Variable named actor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given("a Variable named actor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.And("a Resource named label with \"http://www.w3.org/2000/01/rdf-schema#label\" uri", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -93,7 +93,7 @@ namespace RDFSharp.SpecFlow.Features
  testRunner.And("a Variable named description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
-    testRunner.And("a SelectQuery named selectQuery", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a SelectQuery named selectQuery", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
  testRunner.And("a SPARQLEndpoint named dbPediaEndpoint with \"https://dbpedia.org/sparql\" uri", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -101,12 +101,12 @@ namespace RDFSharp.SpecFlow.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Something useful")]
-        public virtual void SomethingUseful()
+        [NUnit.Framework.DescriptionAttribute("Rembrandt_test")]
+        public virtual void Rembrandt_Test()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Something useful", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Rembrandt_test", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -128,10 +128,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 3
- this.FeatureBackground();
+this.FeatureBackground();
 #line hidden
 #line 13
-    testRunner.And("a PatternGroup named pg1 is added to selectQuery", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a PatternGroup named pg1 is added to selectQuery", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 14
  testRunner.And("a Pattern with actor and label and Rembrandt is added to pg1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
