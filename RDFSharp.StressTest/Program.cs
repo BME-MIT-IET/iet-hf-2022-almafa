@@ -14,11 +14,9 @@ namespace RDFSharp.ManualTest
 
         static void Main(string[] args)
         {
-            TestModels asd = new TestModels();
+            QueryTesting test  = new QueryTesting();
 
-            asd.Run();
-
-            Console.WriteLine("All tests are finished.");
+            test.Run();
         }
     }
 }

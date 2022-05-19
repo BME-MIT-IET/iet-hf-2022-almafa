@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace RDFSharp.StressTest
 {
-    public class TestModels
+    public class QueryTesting
     {
         private static RDFGraph Graph;
 
