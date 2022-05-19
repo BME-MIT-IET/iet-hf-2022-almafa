@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30711.63
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDFSharp", "RDFSharp\RDFSharp.csproj", "{1EEA1A7E-A661-4745-810E-FBEB9F20B6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.Test", "RDFSharp.Test\RDFSharp.Test.csproj", "{BB28A1BF-097E-4F40-AF18-7B527320C032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDFSharp.Test", "RDFSharp.Test\RDFSharp.Test.csproj", "{BB28A1BF-097E-4F40-AF18-7B527320C032}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.StressTest", "RDFSharp.StressTest\RDFSharp.StressTest.csproj", "{5DDA70D3-A3C3-4815-8866-5A00AE2E56A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDFSharp.Integration", "RDFSharp.Integration\RDFSharp.Integration.csproj", "{F71FF159-9FC6-4DB4-8B6D-F84FB5572E3E}"
 EndProject
@@ -23,6 +25,10 @@ Global
 		{BB28A1BF-097E-4F40-AF18-7B527320C032}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB28A1BF-097E-4F40-AF18-7B527320C032}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB28A1BF-097E-4F40-AF18-7B527320C032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DDA70D3-A3C3-4815-8866-5A00AE2E56A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DDA70D3-A3C3-4815-8866-5A00AE2E56A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DDA70D3-A3C3-4815-8866-5A00AE2E56A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DDA70D3-A3C3-4815-8866-5A00AE2E56A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F71FF159-9FC6-4DB4-8B6D-F84FB5572E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F71FF159-9FC6-4DB4-8B6D-F84FB5572E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F71FF159-9FC6-4DB4-8B6D-F84FB5572E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
