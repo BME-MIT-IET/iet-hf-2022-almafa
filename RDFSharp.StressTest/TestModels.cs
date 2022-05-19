@@ -1,6 +1,7 @@
 ﻿using RDFSharp.Model;
-using System.Diagnostics;
 using RDFSharp.Query;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace RDFSharp.StressTest
 {
@@ -10,23 +11,16 @@ namespace RDFSharp.StressTest
 
         public void Run()
         {
-            Console.WriteLine("Started testing loading graphs.");
+            Console.WriteLine("Started query testing");
+            initialTime();
             allActorQuery();
             rembrandtQuery();
-            Console.WriteLine("Finished testing loading graphs.");
+            giovanniQuery();
+            Console.WriteLine("Finished query testing");
         }
 
-        public void allActorQuery()
+        public void initialTime()
         {
-            Console.WriteLine("All Actor Query started\n");
-            DateTime start;
-            DateTime end;
-            TimeSpan total_time = TimeSpan.Zero;
-            Console.WriteLine(total_time);
-
-            Process myProcess = Process.GetCurrentProcess();
-            Console.WriteLine($"Start processor time            : {myProcess.TotalProcessorTime}");
-            Console.WriteLine($"Start physical memory usage     : {myProcess.WorkingSet64}");
 
             var actor = new RDFVariable("?actor");
 
@@ -35,35 +29,63 @@ namespace RDFSharp.StressTest
                     new RDFPatternGroup("pg1").AddPattern(
                         new RDFPattern(
                             actor,
-                            RDFVocabulary.RDFS.DATATYPE,
+                            RDFVocabulary.RDF.TYPE,
                             new RDFPlainLiteral("ecrm:E39_Actor")
                         )
                     )
                 );
 
+            var queryResult = selectQuery.ApplyToGraph(Graph);
+
+        }
+        public void allActorQuery()
+        {
+            Console.WriteLine("--------------------------------------\n");
+            Console.WriteLine("All Actor Query started\n");
+            DateTime start;
+            DateTime end;
+            Process myProcess = Process.GetCurrentProcess();
+
+            DateTime startprocess = DateTime.Now;
+
+            var actor = new RDFVariable("?actor");
+
+            var selectQuery =
+                new RDFSelectQuery().AddPatternGroup(
+                    new RDFPatternGroup("pg1").AddPattern(
+                        new RDFPattern(
+                            actor,
+                            RDFVocabulary.RDF.TYPE,
+                            new RDFPlainLiteral("ecrm:E39_Actor")
+                        )
+                    )
+                )
+                .AddProjectionVariable(actor);
+
             start = DateTime.Now;
             var queryResult = selectQuery.ApplyToGraph(Graph);
             end = DateTime.Now;
+            DateTime endprocess = DateTime.Now;
 
-            total_time = (end - start);
+            long peakWorkingSet = myProcess.PeakWorkingSet64;
 
-            Console.WriteLine($"Total loading time ms           : {total_time.TotalMilliseconds} ms");
-            Console.WriteLine($"End processor time              : {myProcess.TotalProcessorTime}");
-            Console.WriteLine($"End physical memory usage       : {myProcess.WorkingSet64} \n");
+            Console.WriteLine($"Total query time                : {(end - start).TotalMilliseconds} ms");
+            Console.WriteLine($"Total process time              : {(endprocess - startprocess).TotalMilliseconds} ms");
+            Console.WriteLine($"Total physical memory usage     : {myProcess.WorkingSet64} byte");
+            Console.WriteLine($"Peak physical memory usage      : {peakWorkingSet} byte \n");
             Console.WriteLine("All Actor Query ended\n");
+            Console.WriteLine("--------------------------------------\n");
         }
 
         public void rembrandtQuery()
         {
-            Console.WriteLine("RembrandtQuery started\n");
+            Console.WriteLine("--------------------------------------\n");
+            Console.WriteLine("Rembrandt Query started\n");
             DateTime start;
             DateTime end;
-            TimeSpan total_time = TimeSpan.Zero;
-            Console.WriteLine(total_time);
-
             Process myProcess = Process.GetCurrentProcess();
-            Console.WriteLine($"Start processor time            : {myProcess.TotalProcessorTime}");
-            Console.WriteLine($"Start physical memory usage     : {myProcess.WorkingSet64}");
+
+            DateTime startprocess = DateTime.Now;
 
             var actor = new RDFVariable("?actor");
             var description = new RDFVariable("?description");
@@ -91,17 +113,73 @@ namespace RDFSharp.StressTest
                 .AddModifier(new RDFLimitModifier(1))
                 .AddProjectionVariable(description);
 
-            
+
             start = DateTime.Now;
             var queryResult = selectQuery.ApplyToGraph(Graph);
             end = DateTime.Now;
+            DateTime endprocess = DateTime.Now;
 
-            total_time = (end - start);
+            long peakWorkingSet = myProcess.PeakWorkingSet64;
 
-            Console.WriteLine($"Total loading time ms           : {total_time.TotalMilliseconds} ms");
-            Console.WriteLine($"End processor time              : {myProcess.TotalProcessorTime}");
-            Console.WriteLine($"End physical memory usage       : {myProcess.WorkingSet64} \n");
-            Console.WriteLine("RembrandtQuery ended\n");
+            Console.WriteLine($"Total query time                : {(end-start).TotalMilliseconds} ms");
+            Console.WriteLine($"Total process time              : {(endprocess - startprocess).TotalMilliseconds} ms");
+            Console.WriteLine($"Total physical memory usage     : {myProcess.WorkingSet64} byte");
+            Console.WriteLine($"Peak physical memory usage      : {peakWorkingSet} byte \n");
+            Console.WriteLine("Rembrandt Query ended\n");
+            Console.WriteLine("--------------------------------------\n");
+        }
+
+        public void giovanniQuery()
+        {
+            Console.WriteLine("--------------------------------------\n");
+            Console.WriteLine("Giovanni Actor Query started\n");
+            DateTime start;
+            DateTime end;
+            Process myProcess = Process.GetCurrentProcess();
+
+            DateTime startprocess = DateTime.Now;
+
+            var actor = new RDFVariable("?actor");
+            var name = new RDFVariable("?name");
+
+            var selectQuery =
+                 new RDFSelectQuery().AddPatternGroup(
+                     new RDFPatternGroup("pg1").AddPattern(
+                         new RDFPattern(
+                             actor,
+                             RDFVocabulary.RDF.TYPE,
+                             new RDFPlainLiteral("ecrm:E39_Actor")
+                         )
+                     )
+                     .AddPattern(
+                         new RDFPattern(
+                             actor,
+                             RDFVocabulary.RDFS.LABEL,
+                             name
+                         )
+                     )
+                     .AddFilter(
+                         new RDFRegexFilter(
+                             name,
+                             new Regex(@"Giovanni", RegexOptions.IgnoreCase)
+                         )
+                     )
+                 )
+                 .AddProjectionVariable(actor);
+
+            start = DateTime.Now;
+            var queryResult = selectQuery.ApplyToGraph(Graph);
+            end = DateTime.Now;
+            DateTime endprocess = DateTime.Now;
+
+            long peakWorkingSet = myProcess.PeakWorkingSet64;
+
+            Console.WriteLine($"Total query time                : {(end - start).TotalMilliseconds} ms");
+            Console.WriteLine($"Total process time              : {(endprocess - startprocess).TotalMilliseconds} ms");
+            Console.WriteLine($"Total physical memory usage     : {myProcess.WorkingSet64} byte");
+            Console.WriteLine($"Peak physical memory usage      : {peakWorkingSet} byte \n");
+            Console.WriteLine("Giovanni Actor Query ended\n");
+            Console.WriteLine("--------------------------------------\n");
         }
     }
 }
