@@ -173,7 +173,9 @@ namespace RDFSharp.Test.Query
         public void Cleanup()
         {
             foreach (string file in Directory.EnumerateFiles(Environment.CurrentDirectory, "testFile*"))
+            {
                 File.Delete(file);
+            }
         }
     }
 }

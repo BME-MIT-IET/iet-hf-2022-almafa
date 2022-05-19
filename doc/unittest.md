@@ -8,3 +8,6 @@ Az osztálynak, amit választottam az xml sorosítással foglalkozó részét te
 # Bálint Gergő
 A csapatban már bevált FluentAssertation-t használtam unit tesztelésre mert egyszerű és jól értelmezhető.
 
+Az RDFAskQueryResult.cs fileban írtam unit teszteket az RDFAskQueryResult osztályhoz.
+A tesztek az osztály szerializációjával kapcsolatos funkcióit teszteltem.
+Nehéz volt hozzálátni a teszteléshez, mert nagy a projekt, és nehéz átlátni.
