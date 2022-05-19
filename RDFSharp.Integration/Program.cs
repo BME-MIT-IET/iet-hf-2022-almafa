@@ -6,9 +6,12 @@ using RDFSharp.Query;
 SELECT ?description
 WHERE
 {
-    ?actor rdfs:label "Rembrandt"@en .
-    ?actor dbo:abstract ?description
-    FILTER ( LANG ( ?description ) = 'en' )
+    #PG1
+    {
+        ?actor rdfs:label "Rembrandt"@en .
+        ?actor dbo:abstract ?description
+        FILTER ( LANG ( ?description ) = 'en' )
+    }
 }
 LIMIT 1
 
